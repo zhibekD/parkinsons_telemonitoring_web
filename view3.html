@@ -7795,87 +7795,25 @@ a.anchor-link {
 </style>
 <!-- End of mermaid configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
-<main><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=0e8edd43">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span> 
-
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"/Users/zhibekd/Projects/parkinsons_telemonitoring/parkinsons_telemonitoring"</span><span class="p">)</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">utils.data_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_parkinsons_data</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">utils.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_patient_daily_summary</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">utils.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_patient_metadata</span>
-<span class="n">alt</span><span class="o">.</span><span class="n">data_transformers</span><span class="o">.</span><span class="n">disable_max_rows</span><span class="p">()</span>  <span class="c1">#  turn off row limit</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
+<main><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=0e8edd43">
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>DataTransformerRegistry.enable('default')</pre>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=2abc3f3b">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Load data and compute voice variability</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">load_parkinsons_data</span><span class="p">()</span>
-
-<span class="c1"># The dataset does NOT include explicit calendar dates.</span>
-<span class="c1"># So we extract "day number" from the row order for each patient:</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">"day_index"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"subject#"</span><span class="p">)</span><span class="o">.</span><span class="n">cumcount</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=8983f73c">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">patient_daily</span> <span class="o">=</span> <span class="n">make_patient_daily_summary</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-
-<span class="n">summary</span> <span class="o">=</span> <span class="n">patient_daily</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="n">summary</span><span class="p">[</span><span class="s2">"id"</span><span class="p">]</span> <span class="o">=</span> <span class="n">summary</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="c1"># ADD UNIQUE ID for brush</span>
-<span class="n">summary</span> <span class="o">=</span> <span class="n">add_patient_metadata</span><span class="p">(</span><span class="n">summary</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
-
-<span class="n">summary</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs jp-mod-noInput" id="cell-id=2abc3f3b">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=8983f73c">
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[3]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -7968,170 +7906,17 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=86ca9a01">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># INTERACTIVE COMPONENTS</span>
-<span class="n">brush</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">selection_interval</span><span class="p">(</span><span class="n">encodings</span><span class="o">=</span><span class="p">[</span><span class="s2">"x"</span><span class="p">,</span> <span class="s2">"y"</span><span class="p">])</span>
-
-<span class="n">highlight_condition</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">condition</span><span class="p">(</span>
-    <span class="n">brush</span><span class="p">,</span>
-    <span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">"#1f77b4"</span><span class="p">),</span>   <span class="c1"># blue if selected in either plot</span>
-    <span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">"lightgray"</span><span class="p">)</span>  <span class="c1"># gray otherwise</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=4548a97f">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">size_map</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">"Young (&lt; 50)"</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>      <span class="c1"># tiny</span>
-    <span class="s2">"Middle (50-70)"</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span>   <span class="c1"># medium</span>
-    <span class="s2">"Older (70+)"</span><span class="p">:</span> <span class="mi">1200</span>      <span class="c1"># huge</span>
-<span class="p">}</span>
-
-<span class="n">summary</span><span class="p">[</span><span class="s2">"visual_size"</span><span class="p">]</span> <span class="o">=</span> <span class="n">summary</span><span class="p">[</span><span class="s2">"age_group"</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">size_map</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=b5e6ddc6">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">legend_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s2">"age_group"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"Young (&lt;50)"</span><span class="p">,</span> <span class="s2">"Middle (50-70)"</span><span class="p">,</span> <span class="s2">"Older (70+)"</span><span class="p">],</span>
-    <span class="s2">"visual_size"</span><span class="p">:</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">1200</span><span class="p">]</span>
-<span class="p">})</span>
-
-<span class="n">manual_legend</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">legend_df</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">mark_circle</span><span class="p">(</span><span class="n">opacity</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">encode</span><span class="p">(</span>
-        <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s2">"age_group:N"</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="p">[</span><span class="s2">"Young (&lt;50)"</span><span class="p">,</span> <span class="s2">"Middle (50-70)"</span><span class="p">,</span> <span class="s2">"Older (70+)"</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span>
-        <span class="n">size</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Size</span><span class="p">(</span>
-            <span class="s2">"visual_size:Q"</span><span class="p">,</span>
-            <span class="n">scale</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-            <span class="n">legend</span><span class="o">=</span><span class="kc">None</span>
-        <span class="p">),</span>
-        <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">"#1f77b4"</span><span class="p">)</span>
-    <span class="p">)</span>
-    <span class="o">.</span><span class="n">properties</span><span class="p">(</span>
-        <span class="n">width</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span>
-        <span class="n">height</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
-        <span class="n">title</span><span class="o">=</span><span class="s2">"Age Group"</span>
-    <span class="p">)</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=d2e562ed">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">make_scatter_plot</span><span class="p">(</span><span class="n">x_feature</span><span class="p">,</span> <span class="n">x_title</span><span class="p">,</span> <span class="n">y_feature</span><span class="p">,</span> <span class="n">y_title</span><span class="p">,</span> <span class="n">tooltip_values</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
-    <span class="k">return</span> <span class="p">(</span>
-        <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">summary</span><span class="p">)</span>
-        <span class="o">.</span><span class="n">transform_calculate</span><span class="p">(</span><span class="n">size_expr</span><span class="o">=</span><span class="s2">"datum.visual_size"</span><span class="p">)</span>
-        <span class="o">.</span><span class="n">mark_circle</span><span class="p">(</span><span class="n">opacity</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">{</span><span class="s2">"expr"</span><span class="p">:</span> <span class="s2">"size_expr"</span><span class="p">})</span>
-        <span class="o">.</span><span class="n">encode</span><span class="p">(</span>
-            <span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">x_feature</span><span class="si">}</span><span class="s2">:Q"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">x_title</span><span class="p">),</span>
-            <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">y_feature</span><span class="si">}</span><span class="s2">:Q"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">y_title</span><span class="p">),</span>
-            <span class="n">tooltip</span><span class="o">=</span><span class="n">tooltip_values</span><span class="p">,</span>
-            <span class="n">color</span><span class="o">=</span><span class="n">highlight_condition</span><span class="p">,</span>
-            <span class="n">size</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Size</span><span class="p">(</span>
-                <span class="s2">"visual_size:Q"</span><span class="p">,</span>
-                <span class="n">scale</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                <span class="n">legend</span><span class="o">=</span><span class="kc">None</span>
-            <span class="p">)</span>
-        <span class="p">)</span>
-        <span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">brush</span><span class="p">)</span>
-        <span class="o">.</span><span class="n">properties</span><span class="p">(</span>
-            <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
-            <span class="n">height</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span>
-            <span class="n">title</span><span class="o">=</span><span class="n">title</span>
-        <span class="p">)</span>
-    <span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=2718aaec">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">scatter1</span> <span class="o">=</span> <span class="n">make_scatter_plot</span><span class="p">(</span>
-    <span class="n">x_feature</span><span class="o">=</span><span class="s2">"avg_total_UPDRS"</span><span class="p">,</span>
-    <span class="n">x_title</span><span class="o">=</span><span class="s2">"Daily Avg Total UPDRS"</span><span class="p">,</span>
-    <span class="n">y_feature</span><span class="o">=</span><span class="s2">"avg_test_time"</span><span class="p">,</span>
-    <span class="n">y_title</span><span class="o">=</span><span class="s2">"Daily Avg Test Time"</span><span class="p">,</span>
-    <span class="n">tooltip_values</span><span class="o">=</span><span class="p">[</span><span class="s2">"subject#"</span><span class="p">,</span> <span class="s2">"age_group"</span><span class="p">,</span> <span class="s2">"avg_total_UPDRS"</span><span class="p">,</span> <span class="s2">"avg_test_time"</span><span class="p">],</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">"Avg Total UPDRS vs Avg Daily Test Time (Per Patient)"</span>
-<span class="p">)</span>
-
-<span class="n">scatter2</span> <span class="o">=</span> <span class="n">make_scatter_plot</span><span class="p">(</span>
-    <span class="n">x_feature</span><span class="o">=</span><span class="s2">"avg_motor_UPDRS"</span><span class="p">,</span>
-    <span class="n">x_title</span><span class="o">=</span><span class="s2">"Daily Avg Motor UPDRS"</span><span class="p">,</span>
-    <span class="n">y_feature</span><span class="o">=</span><span class="s2">"avg_DFA_per_day"</span><span class="p">,</span>
-    <span class="n">y_title</span><span class="o">=</span><span class="s2">"Daily Avg DFA"</span><span class="p">,</span>
-    <span class="n">tooltip_values</span><span class="o">=</span><span class="p">[</span><span class="s2">"subject#"</span><span class="p">,</span> <span class="s2">"age_group"</span><span class="p">,</span> <span class="s2">"avg_motor_UPDRS"</span><span class="p">,</span> <span class="s2">"avg_DFA_per_day"</span><span class="p">],</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">"Avg Motor UPDRS vs Avg Daily DFA (Per Patient)"</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=4e1194f1">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">linked_view</span> <span class="o">=</span> <span class="p">(</span><span class="n">scatter1</span> <span class="o">|</span> <span class="n">scatter2</span><span class="p">)</span> <span class="o">|</span> <span class="n">manual_legend</span>
-<span class="n">linked_view</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs jp-mod-noInput" id="cell-id=86ca9a01">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs jp-mod-noInput" id="cell-id=4548a97f">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs jp-mod-noInput" id="cell-id=b5e6ddc6">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs jp-mod-noInput" id="cell-id=d2e562ed">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs jp-mod-noInput" id="cell-id=2718aaec">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=4e1194f1">
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <style>
   #altair-viz-19a6978be3f94cea91dde2afc56b907c.vega-embed {

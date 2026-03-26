@@ -7795,186 +7795,27 @@ a.anchor-link {
 </style>
 <!-- End of mermaid configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
-<main><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=c244733e">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span> 
-
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"/Users/zhibekd/Projects/parkinsons_telemonitoring/parkinsons_telemonitoring"</span><span class="p">)</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">utils.data_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_parkinsons_data</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">utils.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_voice_variability</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">utils.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">merge_with_main_df</span>
-<span class="n">alt</span><span class="o">.</span><span class="n">data_transformers</span><span class="o">.</span><span class="n">disable_max_rows</span><span class="p">()</span>  <span class="c1">#  turn off row limit</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
+<main><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=c244733e">
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>DataTransformerRegistry.enable('default')</pre>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=b01142b9">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Load data and compute voice variability</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">load_parkinsons_data</span><span class="p">()</span>
-<span class="n">var_df</span> <span class="o">=</span> <span class="n">compute_voice_variability</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-<span class="n">df_merged</span><span class="o">=</span> <span class="n">merge_with_main_df</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">var_df</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=bc607e4e">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># --------------------------------</span>
-<span class="c1"># INTERACTIVE &amp; DESIGN COMPONENTS:</span>
-<span class="c1"># --------------------------------</span>
-
-<span class="n">color_scale</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">scheme</span><span class="o">=</span><span class="s2">"tableau10"</span><span class="p">)</span>
-
-<span class="c1"># VIZ 1 components</span>
-<span class="n">patient_select</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">selection_point</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">"subject#"</span><span class="p">],</span> <span class="n">toggle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">clear</span><span class="o">=</span><span class="s2">"false"</span><span class="p">)</span>
-
-<span class="c1"># VIZ 2 and 3 components</span>
-<span class="n">slider</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">binding_range</span><span class="p">(</span>
-    <span class="n">name</span><span class="o">=</span><span class="s2">"Days since admitted:"</span><span class="p">,</span>
-    <span class="nb">min</span><span class="o">=</span><span class="n">df_merged</span><span class="p">[</span><span class="s2">"test_time"</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
-    <span class="nb">max</span><span class="o">=</span><span class="n">df_merged</span><span class="p">[</span><span class="s2">"test_time"</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span>
-    <span class="n">step</span><span class="o">=</span><span class="mi">1</span>
-<span class="p">)</span>
-<span class="n">time_cutoff</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">slider</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">df_merged</span><span class="p">[</span><span class="s2">"test_time"</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">+</span> <span class="mi">30</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=49412a7e">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># --------------------------------</span>
-<span class="c1"># VISUALIZATION 1: Bar Chart</span>
-<span class="c1"># --------------------------------</span>
-
-<span class="n">nav_bar</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">var_df</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">mark_bar</span><span class="p">(</span><span class="n">opacity</span><span class="o">=</span><span class="mf">0.85</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">encode</span><span class="p">(</span>
-        <span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span>
-            <span class="s2">"subject#:O"</span><span class="p">,</span>
-            <span class="n">title</span><span class="o">=</span><span class="s2">"Patient ID"</span><span class="p">,</span>
-        <span class="p">),</span>
-        <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span>
-            <span class="s2">"voice_variability:Q"</span><span class="p">,</span>
-            <span class="n">title</span><span class="o">=</span><span class="s2">"Voice Variability (CV Jitter + CV Shimmer)"</span>
-        <span class="p">),</span>
-        <span class="n">tooltip</span><span class="o">=</span><span class="p">[</span>
-            <span class="n">alt</span><span class="o">.</span><span class="n">Tooltip</span><span class="p">(</span><span class="s2">"subject#:N"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Patient ID"</span><span class="p">),</span>
-            <span class="n">alt</span><span class="o">.</span><span class="n">Tooltip</span><span class="p">(</span><span class="s2">"jitter_cv:Q"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Jitter CV"</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">".4f"</span><span class="p">),</span>
-            <span class="n">alt</span><span class="o">.</span><span class="n">Tooltip</span><span class="p">(</span><span class="s2">"shimmer_cv:Q"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Shimmer CV"</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">".4f"</span><span class="p">),</span>
-            <span class="n">alt</span><span class="o">.</span><span class="n">Tooltip</span><span class="p">(</span><span class="s2">"voice_variability:Q"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Variability Score"</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">".4f"</span><span class="p">)</span>
-        <span class="p">]</span>
-    <span class="p">)</span>
-    <span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">patient_select</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">900</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span>
-                <span class="n">title</span><span class="o">=</span><span class="s2">"Patient Variability (Click to Select a Patient OR Hold Shift + Click to Select Multiple Patients)"</span><span class="p">)</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=5ac627ef">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># --------------------------------</span>
-<span class="c1"># VISUALIZATION 2 and 3:</span>
-<span class="c1"># --------------------------------</span>
-
-<span class="c1"># Makes Time Series Chart with LOESS function and adds all interactive components </span>
-<span class="k">def</span><span class="w"> </span><span class="nf">make_loess_plot</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
-    <span class="k">return</span> <span class="p">(</span>
-        <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">df_merged</span><span class="p">)</span>
-        <span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">patient_select</span><span class="p">,</span> <span class="n">time_cutoff</span><span class="p">)</span>
-        <span class="o">.</span><span class="n">transform_loess</span><span class="p">(</span><span class="s2">"test_time"</span><span class="p">,</span> <span class="n">feature</span><span class="p">,</span> <span class="n">groupby</span><span class="o">=</span><span class="p">[</span><span class="s2">"subject#"</span><span class="p">])</span>
-        <span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span><span class="n">patient_select</span><span class="p">)</span>                                  <span class="c1"># click selection</span>
-        <span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span><span class="sa">f</span><span class="s2">"datum.test_time &lt;= </span><span class="si">{</span><span class="n">time_cutoff</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>        <span class="c1"># slider</span>
-        <span class="o">.</span><span class="n">mark_line</span><span class="p">(</span><span class="n">point</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="o">.</span><span class="n">encode</span><span class="p">(</span>
-            <span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s2">"test_time:Q"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Test Time (days)"</span><span class="p">),</span>
-            <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">feature</span><span class="si">}</span><span class="s2">:Q"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">feature</span><span class="p">),</span>
-            <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="s2">"subject#:N"</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">color_scale</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Patient ID"</span><span class="p">),</span>
-            <span class="n">tooltip</span><span class="o">=</span><span class="p">[</span>
-                <span class="n">alt</span><span class="o">.</span><span class="n">Tooltip</span><span class="p">(</span><span class="s2">"subject#:N"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"PatientID"</span><span class="p">),</span>
-                <span class="n">alt</span><span class="o">.</span><span class="n">Tooltip</span><span class="p">(</span><span class="s2">"test_time:Q"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Day"</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">".1f"</span><span class="p">),</span>
-                <span class="n">alt</span><span class="o">.</span><span class="n">Tooltip</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">feature</span><span class="si">}</span><span class="s2">:Q"</span><span class="p">,</span> 
-                            <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">feature</span><span class="si">}</span><span class="s2"> (LOESS)"</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">".4f"</span><span class="p">)</span>
-            <span class="p">]</span>
-        <span class="p">)</span>
-        <span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">450</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
-    <span class="p">)</span>
-
-<span class="c1"># Making visualizations using the function above</span>
-<span class="n">jitter_plot</span> <span class="o">=</span> <span class="n">make_loess_plot</span><span class="p">(</span><span class="s2">"Jitter(%)"</span><span class="p">,</span> <span class="s2">"Jitter (%) Over Time"</span><span class="p">)</span>
-<span class="n">shimmer_plot</span> <span class="o">=</span> <span class="n">make_loess_plot</span><span class="p">(</span><span class="s2">"Shimmer(dB)"</span><span class="p">,</span> <span class="s2">"Shimmer (dB) Over Time"</span><span class="p">)</span>
-
-<span class="c1"># Making Final Dashboard for View 1</span>
-<span class="n">final_dashboard</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">vconcat</span><span class="p">(</span>
-    <span class="n">nav_bar</span><span class="p">,</span>
-    <span class="n">alt</span><span class="o">.</span><span class="n">hconcat</span><span class="p">(</span><span class="n">jitter_plot</span><span class="p">,</span> <span class="n">shimmer_plot</span><span class="p">)</span>
-<span class="p">)</span><span class="o">.</span><span class="n">resolve_scale</span><span class="p">()</span>
-
-<span class="n">final_dashboard</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs jp-mod-noInput" id="cell-id=b01142b9">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs jp-mod-noInput" id="cell-id=bc607e4e">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs jp-mod-noInput" id="cell-id=49412a7e">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=5ac627ef">
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <style>
   #altair-viz-76ee75bfed274bd0b9a4582d52e09541.vega-embed {
@@ -8047,20 +7888,7 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=c466996b">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-</div>
-</div>
-</div>
-</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs jp-mod-noInput" id="cell-id=c466996b">
 </div>
 </main>
 </body>
